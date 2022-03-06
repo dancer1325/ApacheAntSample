@@ -17,5 +17,7 @@
 * Plugins / Views
   * JetBrains contains an Ant view
     * View, Tools Windows, Ant
-    * TODO: Check why we get 'Project JDK not specified' running there directly
+    * Problems
+      * Problem1: 'Project JDK not specified' running there directly
+        * Solution: Add sdk to run it
 
