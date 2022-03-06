@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<project name="SampleAntModule" default="main-target" basedir=".">  <!-- Sin -->
+
+    <!-- Required directories using properties -->
+    <property name="source.dir" value="src" />
+    <property name="build.dir" value="bin" />
+    <property name="javadocs.dir" value="docs" />
+    <property name="javadist.dir" value="dist" />
+
+    <target name="clean" description="Clean target to delete existing directories">
+        <delete dir="${build.dir}" />
+        <delete dir="${javadocs.dir}" />
+        <delete dir="${javadist.dir}" />
+    </target>
+
+    <target name="makedir" description="Create the deleted directories">
+        <mkdir dir="${build.dir}" />
+        <mkdir dir="${javadocs.dir}" />
+        <mkdir dir="${javadist.dir}" />
+    </target>
+
+    <target name="compile" depends="clean, makedir" description="Compile based on files places in source.dir, and store in build.dir">
+        <javac srcdir="${source.dir}" destdir="${build.dir}" includeantruntime="true"/>  <!-- includeantruntime Include Ant run-time libraries in the classpath -->
+    </target>
+
+    <target name="docs" depends="compile" description="Generate javadocs based on compilation">
+        <javadoc packagenames="src" sourcepath="${source.dir}" destdir="${javadocs.dir}">
+            <!-- List of directories which I want to compile and store in Javadocs -->
+            <fileset dir="${source.dir}">
+                <include name="**" />   <!-- Metacharacter to include all -->
+            </fileset>
+        </javadoc>
+    </target>
+
+    <target name="jar" depends="compile" description="Create deployable jar">
+        <jar destfile="${javadist.dir}\Sample.jar" basedir="${build.dir}">  <!-- destfile Specific deployable file to be shared in order to be used-->
+            <manifest>      <!-- Create a manifest file -->
+                <attribute name="Main-class" value="calculator.CalculatorTest"/>    <!-- Indicate the main class. name could be whatever -->
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="main-target" depends="compile, jar, docs" description=""> <!-- If we execute it, and the depending one's aren't executed, then they will be executed-->
+
+    </target>
+</project>

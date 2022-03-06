@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!-- Required for:
+ 1. Formal way
+ 2. Checking the validity of the .xml file
+ -->
+
+<!--<project xmlns="http://maven.apache.org/POM/4.0.0"></project> &lt;!&ndash; It would be for a Maven project &ndash;&gt;-->
+<project name="Hello World Ant Project" default="welcome" basedir=".">
+    <property name="mysite" value="www.google.es"/>     <!-- Global property -->
+    <target name="welcome">
+        <property name="name" value="Alfredo"/>     <!-- Local property -->
+        <echo> Hello World </echo> <!-- It's a task of the target -->
+        <echo>Apache Ant file is at "${ant.file}" - you are at ${mysite}</echo>
+        <!-- ant.file  Predefined Ant property. To access to its value is with "${}" -->
+        <!-- mysite  Custom Ant property. To access to its value is with ${} -->
+    </target>
+    <target name="sample">
+        <echo> My site is ${mysite}, managed by ${name}</echo>
+        <!-- ${name} Custom Ant property. Since it's a local property, declared in another target scope isn't accessible here-->
+    </target>
+    <target name="clean"></target>
+    <target name="mkdir"></target>
+    <target name="docs" depends="compile"></target>
+    <target name="dist" depends="compile"></target>
+    <target name="compile" depends="clean, mkdir"></target> <!-- Target's dependencies are split by ',' -->
+</project>
